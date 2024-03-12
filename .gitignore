@@ -1,0 +1,7 @@
+/files/*
+/data/*
+/Premade Character Sheets/*
+/Campaigns/*
+__pycache__
+.chainlit
+/vectorstore/*

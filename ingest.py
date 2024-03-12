@@ -3,8 +3,11 @@ from langchain.vectorstores import FAISS
 from langchain.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter 
 
-DATA_PATH = 'data/'
+DATA_PATH = './Premade Character Sheets'
 DB_FAISS_PATH = 'vectorstore/db_faiss'
+
+from huggingface_hub import login
+login()
 
 # Create vector database
 def create_vector_db():
@@ -17,8 +20,8 @@ def create_vector_db():
                                                    chunk_overlap=50)
     texts = text_splitter.split_documents(documents)
 
-    embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2',
-                                       model_kwargs={'device': 'mps'})
+    embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
+                                       #model_kwargs={'device': 'mps'})
 
     db = FAISS.from_documents(texts, embeddings)
     db.save_local(DB_FAISS_PATH)
